@@ -1,0 +1,93 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Roboto:wght@100;300;400;500;700&display=swap');
+
+* {
+    //font-family: 'Open Sans', sans-serif;
+    //font-family: 'Roboto', sans-serif;
+}
+
+.table {
+    width: 100%;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+
+    .status {
+        font-size: 0;
+        position: relative;
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        padding: 0;
+
+        &[enabled="false"] {
+            background: radial-gradient(#878787, #696969);
+            box-shadow: 0 0 5px #676767;
+        }
+
+        &[enabled="true"] {
+            background: radial-gradient(#68c328, #75e129);
+            box-shadow: 0 0 5px #68c328;
+        }
+
+        &[enabled="error"] {
+            background: radial-gradient(#d02222, #922626);
+            box-shadow: 0 0 5px #a12929;
+        }
+
+        &[enabled="pending"] {
+            background: radial-gradient(#ffd342, #d3af38);
+            box-shadow: 0 0 5px #d3af38;
+        }
+    }
+
+    .row {
+        &:nth-child(odd) {
+            background: #0000000a;
+        }
+
+        display: flex;
+
+        &.heading {
+            font-size: 10pt;
+            font-weight: 600;
+            color: #282828;
+            text-transform: uppercase;
+            background: #00000029;
+        }
+
+        .element {
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .small {
+            width: 100px;
+            padding: 10px;
+            display: flex;
+            font-size: 10pt;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+    }
+}
+.table .button {
+    color: #fff;
+    font-weight: 500;
+    border-radius: 5px;
+    border: 0;
+    background: #47b6c8 !important;
+    padding: 5px 50px !important;
+    font-size: 12pt !important;
+    user-select: none;
+    cursor: pointer;
+    transition: .13s;
+
+    &:hover {
+        background: #49c3d7 !important;
+    }
+
+    &:active {
+        background: #43acbd !important;
+    }
+}

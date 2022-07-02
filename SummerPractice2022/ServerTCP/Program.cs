@@ -1,18 +1,25 @@
-﻿using SuperSimpleTcp;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using ServerTCP;
+using SuperSimpleTcp;
 using System.Net;
 using System.Text;
 
+SignalRClient signalR;
+
 try
 {
+    signalR = new SignalRClient();
+    await signalR.Start();
+
     SimpleTcpServer server = new SimpleTcpServer("*", 8000);
 
-    string command = "";
+	string command = "";
 
-    server.Events.ClientConnected += ClientConnected;
-    server.Events.ClientDisconnected += ClientDisconnected;
-    server.Events.DataReceived += DataReceived;
+	server.Events.ClientConnected += ClientConnected;
+	server.Events.ClientDisconnected += ClientDisconnected;
+	server.Events.DataReceived += DataReceived;
 
-    server.Start();
+	server.Start();
 
 	while (!command.Equals("exit"))
 	{
@@ -24,19 +31,22 @@ try
 catch (Exception ex)
 {
     Console.WriteLine(ex.Message);
+    Console.ReadLine();
 }
 
-static void ClientConnected(object sender, ConnectionEventArgs e)
+async void ClientConnected(object sender, ConnectionEventArgs e)
 {
+	await signalR.UpdateStatus(e.IpPort, "name", "pending");
     Console.WriteLine($"[{e.IpPort}] client connected");
 }
 
-static void ClientDisconnected(object sender, ConnectionEventArgs e)
+async void ClientDisconnected(object sender, ConnectionEventArgs e)
 {
-    Console.WriteLine($"[{e.IpPort}] client disconnected: {e.Reason}");
+	await signalR.UpdateStatus(e.IpPort, "name", "false");
+	Console.WriteLine($"[{e.IpPort}] client disconnected: {e.Reason}");
 }
 
-static void DataReceived(object sender, DataReceivedEventArgs e)
+async void DataReceived(object sender, DataReceivedEventArgs e)
 {
     Console.WriteLine($"[{e.IpPort}]: {Encoding.UTF8.GetString(e.Data)}");
 }

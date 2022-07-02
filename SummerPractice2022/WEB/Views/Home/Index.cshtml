@@ -1,8 +1,25 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
+}
+@section Styles {
+<link rel="stylesheet" href="~/css/main.min.css" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="status" enabled="false"></div>
+<div class="status" enabled="error"></div>
+<div class="status" enabled="pending"></div>
+
+<div class="table">
+	<div class="row heading">
+		<div class="small">status</div>
+		<div class="element">name</div>
+		<div class="element">ip</div>
+		<div class="element"></div>
+	</div>
 </div>
+
+@section Scripts {
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/main.js"></script>
+}

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.0" />
     <PackageReference Include="SuperSimpleTcp" Version="2.6.0.8" />
   </ItemGroup>
 

@@ -14,14 +14,12 @@ try
 
     server.Start();
 
-    while (!command.Equals("exit"))
-    {
-        command = Console.ReadLine();
-        server.Send("[ClientIp:Port]", command);
-
-    }
-
-    Console.ReadLine();
+	while (!command.Equals("exit"))
+	{
+		command = Console.ReadLine();
+		server.Send("[ClientIp:Port]", command);
+	}
+	Console.ReadLine();
 }
 catch (Exception ex)
 {

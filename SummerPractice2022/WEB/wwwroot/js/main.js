@@ -37,9 +37,14 @@ var GenerateTable = (clients) => {
 				<div class="element">${v.name}</div>
 				<div class="element">${v.ip}</div>
 				<div class="element">
-					<button class="button">Connect</button>
+					<button class="button" onclick='SendMessage("${v.ip}")'>Connect</button>
 				</div>
 			</div>`;
 	});
 }
+
+var SendMessage = (ipPort) => {
+	connection.invoke("SendMessage", ipPort, `Connect to ${ipPort}`);
+}
+
 connection.start();

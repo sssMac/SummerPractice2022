@@ -1,30 +1,31 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using ServerTCP;
+﻿using ServerTCP;
 using SuperSimpleTcp;
-using System.Net;
 using System.Text;
+using System.Text.Json.Nodes;
 
 SignalRClient signalR;
+SimpleTcpServer server;
 
 try
 {
     signalR = new SignalRClient();
-    await signalR.Start();
-
-    SimpleTcpServer server = new SimpleTcpServer("*", 8000);
+    server = new SimpleTcpServer("*", 8000);
 
 	string command = "";
 
+	signalR.ReceivedData += ReceivedData;
 	server.Events.ClientConnected += ClientConnected;
 	server.Events.ClientDisconnected += ClientDisconnected;
 	server.Events.DataReceived += DataReceived;
 
+	await signalR.Start();
 	server.Start();
 
 	while (!command.Equals("exit"))
 	{
+		Console.Write("[Server]");
 		command = Console.ReadLine();
-		server.Send("[ClientIp:Port]", command);
+		
 	}
 	Console.ReadLine();
 }
@@ -34,10 +35,17 @@ catch (Exception ex)
     Console.ReadLine();
 }
 
+async void ReceivedData(string ipPort, string message)
+{
+	await server.SendAsync(ipPort,message);
+    Console.WriteLine($"[{ipPort}] received [{message}]");
+}
+
 async void ClientConnected(object sender, ConnectionEventArgs e)
 {
 	await signalR.UpdateStatus(e.IpPort, "name", "pending");
     Console.WriteLine($"[{e.IpPort}] client connected");
+
 }
 
 async void ClientDisconnected(object sender, ConnectionEventArgs e)

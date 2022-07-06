@@ -5,9 +5,9 @@ namespace WEB.Hubs
 {
 	public class MainHub : Hub
 	{
-		public Task SendMessage(string ipPort, string mes)
+		public Task SendData(string jsonData)
 		{
-			return Clients.Others.SendAsync("SendMessage", ipPort, mes);
+			return Clients.Others.SendAsync("SendData", jsonData);
 		}
 		public Task UpdateStatus(string ip, string name, string status)
 		{

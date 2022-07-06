@@ -16,7 +16,6 @@ connection.on("UpdateStatus", function (ip, name, status) {
 	}
 	ResetTable();
 	GenerateTable(Clients);
-
 });
 var ResetTable = () => {
 	table.innerHTML = `
@@ -37,14 +36,21 @@ var GenerateTable = (clients) => {
 				<div class="element">${v.name}</div>
 				<div class="element">${v.ip}</div>
 				<div class="element">
-					<button class="button" onclick='SendMessage("${v.ip}")'>Connect</button>
+					<button class="button" onclick='SendData("${v.ip}")'>Connect</button>
 				</div>
 			</div>`;
 	});
 }
 
-var SendMessage = (ipPort) => {
-	connection.invoke("SendMessage", ipPort, `Connect to ${ipPort}`);
+var SendData = (ipPort) => {
+	var testJson = {
+		IpPort: ipPort,
+		Name: "test",
+		Data: "test"
+	}
+	connection.invoke("SendData", JSON.stringify(testJson));
 }
+
+
 
 connection.start();

@@ -10,7 +10,7 @@ namespace ServerTCP
 {
 	internal class SignalRClient
 	{
-		public Action<string, string> ReceivedData;
+		public Action<string> ReceivedData;
 
 		private HubConnection connection;
 		public async Task Start()
@@ -19,15 +19,12 @@ namespace ServerTCP
 						.WithUrl("https://localhost:7240/mainhub")
 						.Build();
 			
-			connection.On<string, string>("SendMessage", (ipPort,message) => ReceivedData?.Invoke(ipPort,message));
+			connection.On<string>(
+				"SendData",
+				data => ReceivedData?.Invoke(data)
+			);
 			
 			await connection.StartAsync();
-		}
-
-
-        public async Task SendMessage(string message)
-		{
-			await connection.SendAsync("SendMessage", message);
 		}
 		public async Task UpdateStatus(string ip, string name, string status)
 		{

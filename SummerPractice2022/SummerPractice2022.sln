@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerTCP", "ServerTCP\Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientTCP", "ClientTCP\ClientTCP.csproj", "{40D28998-0738-41A4-B39D-9C3B865A214E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONData", "JSONData\JSONData.csproj", "{0B2DC9FD-2377-4283-B7B9-68420998E767}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{40D28998-0738-41A4-B39D-9C3B865A214E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40D28998-0738-41A4-B39D-9C3B865A214E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40D28998-0738-41A4-B39D-9C3B865A214E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B2DC9FD-2377-4283-B7B9-68420998E767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B2DC9FD-2377-4283-B7B9-68420998E767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B2DC9FD-2377-4283-B7B9-68420998E767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B2DC9FD-2377-4283-B7B9-68420998E767}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

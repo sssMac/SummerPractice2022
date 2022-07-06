@@ -1,6 +1,8 @@
-﻿using ServerTCP;
+﻿using JSONData;
+using ServerTCP;
 using SuperSimpleTcp;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 SignalRClient signalR;
@@ -35,10 +37,10 @@ catch (Exception ex)
     Console.ReadLine();
 }
 
-async void ReceivedData(string ipPort, string message)
+async void ReceivedData(string jsonData)
 {
-	await server.SendAsync(ipPort,message);
-    Console.WriteLine($"[{ipPort}] received [{message}]");
+	var data = JsonSerializer.Deserialize<BaseModel>(jsonData);
+	await server.SendAsync(data.IpPort, data.Data);
 }
 
 async void ClientConnected(object sender, ConnectionEventArgs e)

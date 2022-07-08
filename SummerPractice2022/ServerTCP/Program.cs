@@ -8,6 +8,17 @@ using System.Text.Json.Nodes;
 SignalRClient signalR;
 SimpleTcpServer server;
 
+Console.ForegroundColor = ConsoleColor.White;
+
+Console.WriteLine(@" ____     ____     ____     __  __   ____     ____       	");
+Console.WriteLine(@"/\  _`\  /\  _`\  /\  _`\  /\ \/\ \ /\  _`\  /\  _`\     	");
+Console.WriteLine(@"\ \,\L\_\\ \ \L\_\\ \ \L\ \\ \ \ \ \\ \ \L\_\\ \ \L\ \   	");
+Console.WriteLine(@" \/_\__ \ \ \  _\L \ \ ,  / \ \ \ \ \\ \  _\L \ \ ,  /   	");
+Console.WriteLine(@"   /\ \L\ \\ \ \L\ \\ \ \\ \ \ \ \_/ \\ \ \L\ \\ \ \\ \  	");
+Console.WriteLine(@"   \ `\____\\ \____/ \ \_\ \_\\ `\___/ \ \____/ \ \_\ \_\	");
+Console.WriteLine(@"    \/_____/ \/___/   \/_/\/ / `\/__/   \/___/   \/_/\/ /	");
+
+
 try
 {
     signalR = new SignalRClient();

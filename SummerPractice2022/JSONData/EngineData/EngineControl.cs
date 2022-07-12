@@ -11,5 +11,6 @@ namespace JSONData.EngineData
         public byte EngineNumber { get; set; }
         public byte Direct { get; set; }
         public byte Speed { get; set; }
+        public UInt16 WorkTimeMs { get; set; }
     }
 }

@@ -53,6 +53,9 @@ namespace ClientTCP
 
         public void COMwrite(byte[] data, int offset, int count)
         {
+			_serialPort.DiscardOutBuffer();
+			_serialPort.DiscardInBuffer();
+
             _serialPort.Write(data, offset, count);
         }
     }

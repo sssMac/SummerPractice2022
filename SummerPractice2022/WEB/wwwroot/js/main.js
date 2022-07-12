@@ -72,6 +72,29 @@ var ChangeMovDeg = (e) => {
     SendData(ConnectedIP);
 }
 
+/*
+ 
+ {
+  "AnswerIsRequired": 1,
+  "Engines": [
+    {
+      "EngineNumber": 1,
+      "Direct": 1,
+      "Speed": 100,
+      "WorkTimeMs": 511
+    },
+    {
+      "EngineNumber": 2,
+      "Direct": 1,
+      "Speed": 100,
+      "WorkTimeMs": 511
+    }
+  ],
+  "Code": 81
+}
+ 
+ */
+
 var SendData = (ipPort) => {
 
     console.log(CameraMoveControl);

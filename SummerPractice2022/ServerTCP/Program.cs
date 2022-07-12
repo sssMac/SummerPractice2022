@@ -22,13 +22,14 @@ Console.WriteLine(@"   /\ \L\ \\ \ \L\ \\ \ \\ \ \ \ \_/ \\ \ \L\ \\ \ \\ \  	")
 Console.WriteLine(@"   \ `\____\\ \____/ \ \_\ \_\\ `\___/ \ \____/ \ \_\ \_\	");
 Console.WriteLine(@"    \/_____/ \/___/   \/_/\/ / `\/__/   \/___/   \/_/\/ /	");
 
-
 try
 {
     signalR = new SignalRClient();
-    server = new SimpleTcpServer("*", 8000);
+    server = new SimpleTcpServer("0.0.0.0", 8000);
 
 	string command = "";
+
+	//server.Settings.StreamBufferSize = 64;
 
 	signalR.ReceivedData += ReceivedData;
 	server.Events.ClientConnected += ClientConnected;
@@ -56,13 +57,19 @@ async void ReceivedData(string jsonData)
 {
 	var data = System.Text.Json.JsonSerializer.Deserialize<BaseModel>(jsonData);
 	var cameraControl = System.Text.Json.JsonSerializer.Deserialize<CameraMoveControl>(data.Data);
+	cameraControl.Axis = 0;
+	var cameraControlY = System.Text.Json.JsonSerializer.Deserialize<CameraMoveControl>(data.Data);
+	cameraControlY.Axis = 1;
+	
 	//var engineControl = JsonSerializer.Deserialize<EngineControl>(data.Data);
 	
 	//var control = JsonSerializer.Deserialize<EngineControl>(data.Data);
 	
 	CameraMoveCommand boardCommand = new CameraMoveCommand();
+	boardCommand.CameraNumber = 0x1;
 	boardCommand.CameraMoveDir = new List<CameraMoveControl>();
 	boardCommand.CameraMoveDir.Add(cameraControl);
+	boardCommand.CameraMoveDir.Add(cameraControlY);
 	//switch (data.Code)
 	//{
 	//	case "0x51":
@@ -77,7 +84,8 @@ async void ReceivedData(string jsonData)
 	//		break;
 	//}
 
-	cbp = new CommandBoardProcessor(JsonConvert.SerializeObject(boardCommand));
+	cbp = new CommandBoardProcessor(JsonConvert.SerializeObject(boardCommand, Formatting.Indented));
+	//cbp = new CommandBoardProcessor("{\"CameraNumber\":1,\"AnswerIsRequired\":1,\"CameraMoveDir\":[{\"Axis\":1,\"MovDeg\":63},{\"Axis\":2,\"MovDeg\":63}],\"Code\":113}");
 
 	var cbpData = cbp.GetCommandBinPackage();
 

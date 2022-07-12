@@ -31,16 +31,18 @@ namespace JSONData.Models
         }
         public void SetCommandOperands(EngineCommand command, List<byte> commandOperands)
         {
+            commandOperands.Add(command.Code);
             foreach (var ec in command.Engines)
             {
                 commandOperands.Add(ec.EngineNumber);
                 commandOperands.Add(ec.Direct);
-                commandOperands.Add(ec.Speed);
                 commandOperands.AddRange(BitConverter.GetBytes(ec.WorkTimeMs));
+                commandOperands.Add(ec.Speed);
             }
         }
         public void SetCommandOperands(CameraMoveCommand command, List<byte> commandOperands)
         {
+            commandOperands.Add(command.Code);
             commandOperands.Add(command.CameraNumber);
             foreach (var ec in command.CameraMoveDir)
             {

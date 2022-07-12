@@ -8,17 +8,15 @@ namespace JSONData.Core.CommandConverters
         
         public byte[] GetBinPackage(TransferPackage transferPackage)
         {
-            List<byte> package = new List<byte>()
-            {
-                transferPackage.IdDevice,
-                transferPackage.IdBoard,
-                transferPackage.Command,
-                transferPackage.AnswerIsRequired
-            };
+            List<byte> package = new List<byte>();
+            package.Add(transferPackage.IdDevice);
+            package.Add(transferPackage.IdBoard);
+            package.Add(transferPackage.Command);
             package.AddRange(BitConverter.GetBytes(transferPackage.CommandLength));
             package.AddRange(transferPackage.CommandOperands);
-            package.AddRange(new byte[transferPackage.FullPackageLength - package.Count]);
+            package.Add(transferPackage.AnswerIsRequired);
             package.Add(GetCheckSum(package));
+            package.AddRange(new byte[transferPackage.FullPackageLength - package.Count]);
 
             return package.ToArray();
         }

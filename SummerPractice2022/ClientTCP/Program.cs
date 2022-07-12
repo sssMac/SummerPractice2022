@@ -10,7 +10,7 @@ SimpleTcpClient client;
 
 try
 {
-    client = new SimpleTcpClient("127.0.0.1:8000");
+    client = new SimpleTcpClient("arinet.pro:8000");
     port = new COMPort();
 
     string command = "";

@@ -33,7 +33,6 @@ namespace JSONData.Core.CommandConverters
 		{
             List<byte> commandOperands = new List<byte>();
             
-            commandOperands.Add(command.Code);
             command.SetCommandOperands(command, commandOperands);
             return commandOperands.ToArray();
         }

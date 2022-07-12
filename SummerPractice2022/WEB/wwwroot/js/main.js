@@ -78,11 +78,10 @@ var SendData = (ipPort) => {
 
     var json = {
         IpPort: ipPort,
+        Code: "0x71",
         Data: JSON.stringify(CameraMoveControl)
     }
     connection.invoke("SendData", JSON.stringify(json));
 }
-
-
 
 connection.start();

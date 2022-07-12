@@ -16,21 +16,20 @@ namespace JSONData.Models
         {
             Code = 0x00;
         }
-        public List<byte> commandOperands = new List<byte>();
-        public void SetCommandOperands(BoardCommand command)
+        public void SetCommandOperands(BoardCommand command, List<byte> commandOperands)
         {
             if (command is EngineCommand)
             {
-                SetCommandOperands((EngineCommand)command);
+                SetCommandOperands((EngineCommand)command, commandOperands);
                 return;
             }
             if (command is CameraMoveCommand)
             {
-                SetCommandOperands((CameraMoveCommand)command);
+                SetCommandOperands((CameraMoveCommand)command, commandOperands);
                 return;
             }
         }
-        public void SetCommandOperands(EngineCommand command)
+        public void SetCommandOperands(EngineCommand command, List<byte> commandOperands)
         {
             foreach (var ec in command.Engines)
             {
@@ -40,7 +39,7 @@ namespace JSONData.Models
                 commandOperands.AddRange(BitConverter.GetBytes(ec.WorkTimeMs));
             }
         }
-        public void SetCommandOperands(CameraMoveCommand command)
+        public void SetCommandOperands(CameraMoveCommand command, List<byte> commandOperands)
         {
             commandOperands.Add(command.CameraNumber);
             foreach (var ec in command.CameraMoveDir)

@@ -3,11 +3,10 @@ using JSONData.CammeraData;
 using JSONData.Core.CommandConverters;
 using JSONData.EngineData;
 using JSONData.Models;
+using Newtonsoft.Json;
 using ServerTCP;
 using SuperSimpleTcp;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 
 SignalRClient signalR;
 SimpleTcpServer server;
@@ -55,12 +54,10 @@ catch (Exception ex)
 
 async void ReceivedData(string jsonData)
 {
-	var data = JsonSerializer.Deserialize<BaseModel>(jsonData);
-	var cameraControl = JsonSerializer.Deserialize<CameraMoveControl>(data.Data);
+	var data = System.Text.Json.JsonSerializer.Deserialize<BaseModel>(jsonData);
+	var cameraControl = System.Text.Json.JsonSerializer.Deserialize<CameraMoveControl>(data.Data);
 	//var engineControl = JsonSerializer.Deserialize<EngineControl>(data.Data);
-	Console.WriteLine(cameraControl.Axis);
-	Console.WriteLine(cameraControl.MovDeg);
-
+	
 	//var control = JsonSerializer.Deserialize<EngineControl>(data.Data);
 	
 	CameraMoveCommand boardCommand = new CameraMoveCommand();
@@ -80,7 +77,7 @@ async void ReceivedData(string jsonData)
 	//		break;
 	//}
 
-	cbp = new CommandBoardProcessor(JsonSerializer.Serialize(boardCommand));
+	cbp = new CommandBoardProcessor(JsonConvert.SerializeObject(boardCommand));
 
 	var cbpData = cbp.GetCommandBinPackage();
 
@@ -88,7 +85,7 @@ async void ReceivedData(string jsonData)
 	foreach (byte b in cbpData)
 		hex.AppendFormat(" {0:x2}", b);
 
-	//Console.WriteLine(hex);
+	Console.WriteLine(hex);
 	await server.SendAsync(data.IpPort, cbpData);
 }
 

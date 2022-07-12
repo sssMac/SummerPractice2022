@@ -32,8 +32,9 @@ namespace JSONData.Core.CommandConverters
         private byte[] GetEngineCommandOperands(BoardCommand command)
 		{
             List<byte> commandOperands = new List<byte>();
+            
             commandOperands.Add(command.Code);
-            command.SetCommandOperands(command);
+            command.SetCommandOperands(command, commandOperands);
             return commandOperands.ToArray();
         }
 

@@ -46,7 +46,7 @@ var GenerateTable = (clients) => {
 				</div>` +
                 (v.ip == ConnectedIP ?
                 `<div class="element">
-					<input type="range" min="0" max="100" step="1" oninput="ChangeAxis(this.value)" />
+					<input type="range" min="0" max="1" step="1" oninput="ChangeAxis(this.value)" />
 					<input type="range" min="0" max="100" step="1" oninput="ChangeMovDeg(this.value)" />
 				</div>` : `` )
             + `</div>`;
@@ -64,15 +64,18 @@ var CameraMoveControl = {
     MovDeg: 0
 }
 var ChangeAxis = (e) => {
-    CameraMoveControl.Axis = e;
+    CameraMoveControl.Axis = +e;
     SendData(ConnectedIP);
 }
 var ChangeMovDeg = (e) => {
-    CameraMoveControl.MovDeg = e;
+    CameraMoveControl.MovDeg = +e;
     SendData(ConnectedIP);
 }
 
 var SendData = (ipPort) => {
+
+    console.log(CameraMoveControl);
+
     var json = {
         IpPort: ipPort,
         Data: JSON.stringify(CameraMoveControl)

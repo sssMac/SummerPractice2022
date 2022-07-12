@@ -11,6 +11,7 @@ namespace JSONData
 	{
 		public string? IpPort { get; set; }
 		public string? Name { get; set; }
+		public string? Code { get; set; }
 		public string? Data { get; set; }
 	}
 }

@@ -1,4 +1,8 @@
 ﻿using JSONData;
+using JSONData.CammeraData;
+using JSONData.Core.CommandConverters;
+using JSONData.EngineData;
+using JSONData.Models;
 using ServerTCP;
 using SuperSimpleTcp;
 using System.Text;
@@ -7,6 +11,7 @@ using System.Text.Json.Nodes;
 
 SignalRClient signalR;
 SimpleTcpServer server;
+CommandBoardProcessor cbp;
 
 Console.ForegroundColor = ConsoleColor.White;
 
@@ -51,7 +56,40 @@ catch (Exception ex)
 async void ReceivedData(string jsonData)
 {
 	var data = JsonSerializer.Deserialize<BaseModel>(jsonData);
-	await server.SendAsync(data.IpPort, data.Data);
+	var cameraControl = JsonSerializer.Deserialize<CameraMoveControl>(data.Data);
+	//var engineControl = JsonSerializer.Deserialize<EngineControl>(data.Data);
+	Console.WriteLine(cameraControl.Axis);
+	Console.WriteLine(cameraControl.MovDeg);
+
+	//var control = JsonSerializer.Deserialize<EngineControl>(data.Data);
+	
+	CameraMoveCommand boardCommand = new CameraMoveCommand();
+	boardCommand.CameraMoveDir = new List<CameraMoveControl>();
+	boardCommand.CameraMoveDir.Add(cameraControl);
+	//switch (data.Code)
+	//{
+	//	case "0x51":
+	//		boardCommand = new EngineCommand();
+	//		((EngineCommand)boardCommand).Engines = new List<EngineControl>();
+	//		((EngineCommand)boardCommand).Engines.Add(engineControl);
+	//		break;
+	//	case "0x71":
+	//		boardCommand = new CameraMoveCommand();
+	//		((CameraMoveCommand)boardCommand).CameraMoveDir = new List<CameraMoveControl>();
+	//		((CameraMoveCommand)boardCommand).CameraMoveDir.Add(cameraControl);
+	//		break;
+	//}
+
+	cbp = new CommandBoardProcessor(JsonSerializer.Serialize(boardCommand));
+
+	var cbpData = cbp.GetCommandBinPackage();
+
+	StringBuilder hex = new StringBuilder(cbpData.Length * 2);
+	foreach (byte b in cbpData)
+		hex.AppendFormat(" {0:x2}", b);
+
+	//Console.WriteLine(hex);
+	await server.SendAsync(data.IpPort, cbpData);
 }
 
 async void ClientConnected(object sender, ConnectionEventArgs e)

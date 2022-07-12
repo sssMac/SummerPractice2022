@@ -17,39 +17,39 @@ namespace ClientTCP
 
         public void COMconnect()
         {
-            string[] ports = SerialPort.GetPortNames();
+			string[] ports = SerialPort.GetPortNames();
 
-            Console.WriteLine("Выберите порт:");
-            for (int i = 0; i < ports.Length; i++)
-            {
-                Console.WriteLine("[" + i.ToString() + "] " + ports[i].ToString());
-            }
+			Console.WriteLine("Выберите порт:");
+			for (int i = 0; i < ports.Length; i++)
+			{
+				Console.WriteLine("[" + i.ToString() + "] " + ports[i].ToString());
+			}
 
-            string n = Console.ReadLine();
-            int num = int.Parse(n);
-            try
-            {
-                _serialPort.PortName = ports[num];
-                _serialPort.BaudRate = 115200;
-                _serialPort.DataBits = 8;
-                _serialPort.Parity = System.IO.Ports.Parity.None;
-                _serialPort.StopBits = System.IO.Ports.StopBits.One;
-                _serialPort.ReadTimeout = 1000;
-                _serialPort.WriteTimeout = 1000;
-                _serialPort.Open();
+			string n = Console.ReadLine();
+			int num = int.Parse(n);
+			try
+			{
+				_serialPort.PortName = ports[num];
+				_serialPort.BaudRate = 115200;
+				_serialPort.DataBits = 8;
+				_serialPort.Parity = System.IO.Ports.Parity.None;
+				_serialPort.StopBits = System.IO.Ports.StopBits.One;
+				_serialPort.ReadTimeout = 1000;
+				_serialPort.WriteTimeout = 1000;
+				_serialPort.Open();
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("ERROR: невозможно открыть порт:" + ex.ToString());
-                return;
-            }
-        }
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("ERROR: невозможно открыть порт:" + ex.ToString());
+				return;
+			}
+		}
 
-        public void COMdisconnect()
-        {
-            _serialPort.Close();
-        }
+		public void COMdisconnect()
+		{
+			_serialPort.Close();
+		}
 
         public void COMwrite(byte[] data, int offset, int count)
         {

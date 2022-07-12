@@ -50,5 +50,5 @@ void Disconnected(object sender, ConnectionEventArgs e)
 void DataReceived(object sender, DataReceivedEventArgs e)
 {
     Console.WriteLine($"[{e.IpPort}] {Encoding.UTF8.GetString(e.Data)}");
-    port.COMwrite(e.Data,0, (e.Data).Length);
+    port.COMwrite(e.Data, 0, (e.Data).Length);
 }

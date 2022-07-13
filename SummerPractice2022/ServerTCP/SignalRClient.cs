@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using ServerTCP.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServerTCP
 {
-	internal class SignalRClient
+    internal class SignalRClient : ISignalRClient
 	{
-		public Action<string> ReceivedData;
+		public Action<string> ReceivedData { get; set; }
 
 		private HubConnection connection;
 		public async Task Start()

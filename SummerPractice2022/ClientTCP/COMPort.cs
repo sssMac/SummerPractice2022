@@ -25,8 +25,8 @@ namespace ClientTCP
 				Console.WriteLine("[" + i.ToString() + "] " + ports[i].ToString());
 			}
 
-			string n = Console.ReadLine();
-			int num = int.Parse(n);
+			int num = int.Parse(Console.ReadLine());
+
 			try
 			{
 				_serialPort.PortName = ports[num];
@@ -48,15 +48,32 @@ namespace ClientTCP
 
 		public void COMdisconnect()
 		{
-			_serialPort.Close();
+            try
+            {
+				_serialPort.Close();
+			}
+			catch(Exception ex)
+            {
+				Console.WriteLine("ERROR: невозможно закрыть порт:" + ex.ToString());
+				return;
+			}
 		}
 
         public void COMwrite(byte[] data, int offset, int count)
         {
-			_serialPort.DiscardOutBuffer();
-			_serialPort.DiscardInBuffer();
+            try
+            {
+				_serialPort.DiscardOutBuffer();
+				_serialPort.DiscardInBuffer();
 
-            _serialPort.Write(data, offset, count);
+				_serialPort.Write(data, offset, count);
+			}
+			catch(Exception ex)
+            {
+				Console.WriteLine("ERROR: невозможно отправить данные:" + ex.ToString());
+				return;
+			}
+
         }
     }
 }
